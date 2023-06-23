@@ -1,0 +1,141 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+i{
+  cursor: pointer;
+}
+
+.left_box{
+  border: 1px dashed #e9b8e9;
+  background-color: #ffd2ff6e;
+  border-radius: 10px;
+  width: 30%;
+  font-family: fangsong;
+  font-style: normal;
+  
+}
+.right_box{
+  width: 70%;
+  /* border: 2px solid #e9b8e9; */
+  border-radius: 10px;
+  padding: 0px 10px;
+  margin: 0 1rem;
+    font-family: fangsong;
+  font-style: normal;
+}
+.form_design{
+  padding: 20px;
+}
+.btn_center{
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.card{
+  border: 2px solid #e9b8e9;
+  box-shadow: 5px 5px 0px #ffd2ffc9;
+  cursor: pointer;
+
+}
+
+.card-title{
+
+  background-color: #ffd2ff6e;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.card-text{
+  border: 1px dashed #e9b8e9;
+  padding: 3px;
+  border-radius: 10px;
+  height: 3.5rem;
+}
+
+.card:hover{
+  box-shadow: 8px 8px 0px #ffd2ffc9;
+}
+
+.notes_heading{
+  background-color: #ffd2ff6e;
+  border: 1px dashed #e9b8e9;
+  border-radius: 10px;
+}
+
+.res_form{
+  margin: auto;
+  width: 50%;
+}
+.flexible{
+  display: flex;
+}
+.bgcolor {
+  background-color: #98929621;
+}
+.imground{
+border-radius: 50%;
+width: 50px;
+height: 50px;
+border:1px solid black
+}
+
+@media screen and (max-width: 830px) {
+  .left_box{
+    width: 90%;
+    margin: 5rem;
+  }
+  .right_box{
+    width: 100% ;
+  }
+  .notes_heading{
+    width: 100%;
+
+  }
+  .card{
+    width: 45% !important;
+  }
+  .flexible{
+  flex-direction: column;
+}
+.res_form{
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+}

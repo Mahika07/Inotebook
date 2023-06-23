@@ -7,7 +7,7 @@ const Signup = (props) => {
     const [avatar, setavatar] = useState("")
 
     let navigate = useNavigate();
-    const settingprofile = (file) => {
+    const settingprofile = async (file) => {
         console.log(file)
         if (file === undefined) {
 
@@ -21,7 +21,7 @@ const Signup = (props) => {
             data.append("file", file[0]);
             data.append("upload_preset", "we1wwysc");
             data.append("cloud_name", "dcaalrmnb");
-            axios.post("https://api.cloudinary.com/v1_1/dcaalrmnb/image/upload", data).then((res) => res.data)
+            await axios.post("https://api.cloudinary.com/v1_1/dcaalrmnb/image/upload", data).then((res) => res.data)
                 .then((data) => {
                     setavatar(data.url.toString());
                     console.log(data.url.toString());

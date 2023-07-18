@@ -28,13 +28,18 @@ const NoteState = (props) => {
 
     const noteInital = []
     const [notes, setNotes] = useState(noteInital)
+    const [alertshow, setalertshow] = useState("")
+    const [mode, setmode] = useState("light")
+
 
     //get all notes
+
 
 
     const getNote = async () => {
 
         //api call
+        // const url = `http://localhost:5000/api/note/fecthnotes`
         const url = `api/note/fecthnotes`
         const response = await fetch(url, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -48,7 +53,7 @@ const NoteState = (props) => {
 
         });
         const json = await response.json()
-        console.log(json)
+
         setNotes(json)
     }
 
@@ -57,6 +62,7 @@ const NoteState = (props) => {
     const addNote = async (title, description, tag) => {
 
         //api call
+        // const url = `http://localhost:5000/api/note/addnotes`
         const url = `api/note/addnotes`
         const response = await fetch(url, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -80,6 +86,7 @@ const NoteState = (props) => {
     const deleteNote = async (id) => {
 
         //api call
+        // const url = `http://localhost:5000/api/note/deletenote/${id}`
         const url = `api/note/deletenote/${id}`
         const response = await fetch(url, {
             method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
@@ -95,7 +102,7 @@ const NoteState = (props) => {
         const json = response.json(); // parses JSON response into native JavaScript objects
 
         const newnotes = notes.filter((note) => {
-            return note._id != id
+            return note._id !== id
         })
         setNotes(newnotes)
     }
@@ -104,6 +111,7 @@ const NoteState = (props) => {
     const editNote = async (id, title, description, tag) => {
 
         //api call
+        // const url = `http://localhost:5000/api/note/updatenotes/${id}`
         const url = `api/note/updatenotes/${id}`
         const response = await fetch(url, {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
@@ -121,7 +129,7 @@ const NoteState = (props) => {
         let newnotes = JSON.parse(JSON.stringify(notes))
         for (let index = 0; index < newnotes.length; index++) {
             const element = newnotes[index];
-            if (element._id == id) {
+            if (element._id === id) {
                 newnotes[index].title = title
                 newnotes[index].description = description
                 newnotes[index].tag = tag
@@ -131,9 +139,44 @@ const NoteState = (props) => {
         setNotes(newnotes)
     }
 
+    const updateUser = async (id, name, email, avatar) => {
+
+        //api call
+        // const url = `http://localhost:5000/api/auth/updateuser/${id}`
+        const url = `api/auth/updateuser/${id}`
+        const response = await fetch(url, {
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': localStorage.getItem("token")
+
+            },
+
+            body: JSON.stringify({ name, email, avatar })
+        });
+        const json = await response.json();
+        if (json.success) {
+
+            setalertshow("success")
+
+            localStorage.setItem("UserDeatils", JSON.stringify(json.user))
+
+
+
+        }
+        else {
+            setalertshow("danger")
+
+        }
+
+
+    }
+
+
 
     return (
-        <Notecontext.Provider value={{ notes, getNote, addNote, deleteNote, editNote }}>
+        <Notecontext.Provider value={{ notes, getNote, addNote, deleteNote, editNote, updateUser, alertshow, mode, setmode }}>
             {props.children}
         </Notecontext.Provider >
     )

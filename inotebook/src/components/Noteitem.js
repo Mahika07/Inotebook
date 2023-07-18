@@ -5,7 +5,7 @@ import notecontext from '../context/notes/NoteContext'
 
 const Noteitem = (props) => {
     const context = useContext(notecontext)
-    const { deleteNote } = context
+    const { deleteNote, mode } = context
 
     const { note, updateNote } = props;
 
@@ -15,17 +15,17 @@ const Noteitem = (props) => {
     }
     return (
         <>
-            <div className="card my-2 mx-2" style={{ width: '30%' }}>
-                <div className="card-body">
-                    <h5 className="card-title">{note.title.toUpperCase()}</h5>
+            <div className={`${mode === 'light' ? 'card' : 'card_dark'} my-2 mx-2`} style={{ width: '30%' }}>
+                <div className="py-3 px-3">
+                    <h5 className={`${mode === 'light' ? 'card-title' : 'card-title-dark'}`}>{note.title.toUpperCase()}</h5>
 
-                    {note.description.length > 48 ? <p className="card-text">{note.description.substr(0, 45)}...</p> : <p className="card-text">{note.description}</p>}
-                    <h6 class="card-subtitle mb-2 text-muted">{note.tag}</h6>
+                    {note.description.length > 48 ? <p className={`${mode === 'light' ? 'card-text' : 'card-text-dark my-2'}`} style={{ color: `${mode === 'light' ? 'black' : 'white'}` }}>{note.description.substr(0, 45)}...</p> : <p className={`${mode === 'light' ? 'card-text' : 'card-text-dark'}`} style={{ color: `${mode === 'light' ? 'black' : 'white'}` }}>{note.description}</p>}
+                    <h6 className="card-subtitle mb-2 text-muted" style={{ color: `${mode === 'light' ? 'black' : 'white'}` }} >{note.tag}</h6>
                     <div className='d-flex justify-content-between'>
-                        <span class="material-icons-outlined" onClick={handledelete}>
+                        <span className="material-icons-outlined" style={{ color: `${mode === 'light' ? 'black' : 'white'}` }} onClick={handledelete}>
                             &#xe92e;
                         </span>
-                        <span class="material-symbols-outlined" onClick={() => { updateNote(note) }}>
+                        <span className="material-symbols-outlined" style={{ color: `${mode === 'light' ? 'black' : 'white'}` }} onClick={() => { updateNote(note) }}>
                             &#xe3c9;
                         </span>
                     </div>

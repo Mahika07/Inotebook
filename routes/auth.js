@@ -106,6 +106,7 @@ router.post('/login', [body('email', 'Enter a valid email').isEmail(), body('pas
 router.post('/getuser', fetchuser, async (req, res) => {
 
     try {
+
         const userid = req.user.id
         console.log(userid)
         const user = await User.findById(userid).select("-password")
@@ -117,6 +118,63 @@ router.post('/getuser', fetchuser, async (req, res) => {
     }
 
 
+})
+
+router.put('/updateuser/:id', fetchuser, async (req, res) => {
+    const { name, email, avatar } = req.body
+    const newuser = {}
+    try {
+        let success = false
+        let user = await User.findOne({ email });
+        if (user) {
+            success = false;
+            return res.status(400).json({ success, error: "please login with correct email " });
+        }
+        if (name) { newuser.name = name }
+        if (email) {
+            newuser.email = email
+
+
+        }
+        if (avatar) { newuser.avatar = avatar }
+
+        user = await User.findByIdAndUpdate(req.params.id, { $set: newuser }, { new: true })
+        success = true
+        res.json({ user, success })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).send("some error occured")
+    }
+})
+
+//update password
+router.put('/resetpassword/:id', fetchuser, async (req, res) => {
+    const { oldpassword, newpassword, conformpassword, password } = req.body
+    let success = false;
+    try {
+        if (newpassword !== conformpassword) {
+            return res.status(400).json({ success, error: "password does not match" });
+        }
+        const pass = await bcrypt.compare(oldpassword, password);
+        if (!pass) {
+            success = false;
+            return res.status(400).json({ success, error: "incorrect password" });
+        }
+
+
+        const salt = await bcrypt.genSalt(10);
+        const securepass = await bcrypt.hash(newpassword, salt);
+
+
+        let user = await User.findByIdAndUpdate(req.params.id, { $set: { password: securepass } }, { new: true })
+        success = true;
+        res.json({ success })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).send("some error occured")
+    }
 })
 module.exports = router;
 

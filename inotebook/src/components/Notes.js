@@ -5,7 +5,7 @@ import Noteitem from './Noteitem'
 
 const Notes = (props) => {
     const context = useContext(notecontext)
-    const { notes, getNote, editNote } = context
+    const { notes, getNote, editNote, mode } = context
     let nav = useNavigate()
     useEffect(() => {
         if (localStorage.getItem("token")) {
@@ -75,10 +75,10 @@ const Notes = (props) => {
 
 
 
-                <div className="row my-3 text-center notes_heading">
-                    <h2>You Notes</h2>
+                <div className={`row my-3 text-center ${mode === 'light' ? 'notes_heading' : 'notes_heading_dark'}`}>
+                    <h2 className={`${mode === 'light' ? 'textlight' : 'textdark'} `} >Your Notes</h2>
                 </div>
-                {notes.length === 0 && 'No notes to display'}
+                {notes.length === 0 && <p className={`${mode === 'light' ? 'textlight' : 'textdark'} `}>No notes to display</p>}
                 <div className='d-flex my-3 container justify-content-start flex-wrap'>  {
                     notes.map((n) => {
                         return <Noteitem key={n._id} updateNote={updateNote} note={n} showAlert={props.showAlert} />
